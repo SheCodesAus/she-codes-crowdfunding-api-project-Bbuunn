@@ -1,4 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+
+User = get_user_model()
+
 class Event(models.Model):
     title=models.CharField(max_length=200) #shorter
     description=models.TextField() #longer
@@ -9,8 +13,11 @@ class Event(models.Model):
     image=models.URLField()
     min_attendees=models.IntegerField()
     max_attendees=models.IntegerField()
-    owner_id=models.CharField(max_length=200) #change to a foreign key that will store user ID
-
+    owner=models.ForeignKey( #previously owner_id
+        User,
+        on_delete=models.CASCADE,
+        related_name='events' #user.events = all the events owned by user
+    )
 
 # class Pledge(models.Model):
 #     amount = models.IntegerField()

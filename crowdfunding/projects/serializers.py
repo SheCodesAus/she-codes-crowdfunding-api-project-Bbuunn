@@ -24,7 +24,7 @@ class EventSerializer(serializers.Serializer): #we need to give it fields in mod
     image = serializers.URLField()
     min_attendees=serializers.IntegerField()
     max_attendees=serializers.IntegerField()
-    owner_id = serializers.CharField(max_length=200)
+    owner = serializers.CharField(max_length=200)
     
     def create(self, validated_data):
         return Event.objects.create(**validated_data)
