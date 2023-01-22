@@ -16,7 +16,7 @@ class EventCreate(APIView):
     def post(self, request): #create into model instance
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -50,7 +50,7 @@ class AttendanceCreate(APIView):
     def post(self, request):
         serializer = AttendanceSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save() #owner=request.user
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED

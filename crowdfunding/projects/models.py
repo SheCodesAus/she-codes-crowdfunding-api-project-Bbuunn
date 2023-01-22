@@ -14,14 +14,9 @@ class Event(models.Model):
     min_attendees=models.IntegerField()
     max_attendees=models.IntegerField()
     owner=models.ForeignKey( #previously owner_id
-        get_user_model(), #previously User,
+        User, #previously User,
         on_delete=models.CASCADE,
         related_name='events' #user.events = all the events owned by user
-    )
-    attendees=models.ForeignKey( #supporter in class example
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='attendances'
     )
 
 class Attendance(models.Model):
@@ -31,4 +26,9 @@ class Attendance(models.Model):
         on_delete=models.CASCADE, #delete everything linked when deleted
         related_name='attendances' #attribute we can access eg.my_event.attendances
     )
-    user = models.CharField(max_length=200) #update when user model is made
+
+    user = models.ForeignKey( #supporter in class example
+        User,
+        on_delete=models.CASCADE,
+        related_name='attendances'
+    )
