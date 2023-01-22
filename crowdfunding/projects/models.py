@@ -19,14 +19,11 @@ class Event(models.Model):
         related_name='events' #user.events = all the events owned by user
     )
 
-# class Pledge(models.Model):
-#     amount = models.IntegerField()
-#     comment = models.CharField(max_length=200)
-#     anonymous = models.BooleanField()
-#     #linking to above project model
-#     project = models.ForeignKey(
-#         'Project',
-#         on_delete=models.CASCADE, #delete everything linked when deleted
-#         related_name='pledges' #attribute we can access eg.my_project.pledges
-#     )
-#     supporter = models.CharField(max_length=200) #update when user model is made
+class Attendance(models.Model):
+    #linking to above event model
+    event = models.ForeignKey(
+        'Event',
+        on_delete=models.CASCADE, #delete everything linked when deleted
+        related_name='attendances' #attribute we can access eg.my_event.attendances
+    )
+    user = models.CharField(max_length=200) #update when user model is made
