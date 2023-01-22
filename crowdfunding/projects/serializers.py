@@ -22,10 +22,10 @@ class EventSerializer(serializers.Serializer): #we need to give it fields in mod
     min_attendees=serializers.IntegerField()
     max_attendees=serializers.IntegerField()
     owner = serializers.CharField(max_length=200)
-    
+
     def create(self, validated_data):
         return Event.objects.create(**validated_data)
 
-# class EventDetailSerializer(EventSerializer):
-#     #another type of project serializer
-#     pledges = PledgeSerializer(many=True, read_only=True)
+class EventDetailSerializer(EventSerializer):
+    #another type of project serializer
+    attendances = AttendanceSerializer(many=True, read_only=True)

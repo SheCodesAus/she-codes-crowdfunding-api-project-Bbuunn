@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Event, Attendance
-from .serializers import EventSerializer, AttendanceSerializer #ProjectDetailSerializer
+from .serializers import EventSerializer, AttendanceSerializer, EventDetailSerializer
 from django.http import Http404
 from rest_framework import status
 
@@ -28,17 +28,17 @@ class EventCreate(APIView):
         )
 
 
-# class ProjectDetail(APIView):
-#     def get_object(self, pk): #pk = project id
-#         try:
-#             return Project.objects.get(pk=pk)
-#         except Project.DoesNotExist:
-#             raise Http404
+class EventtDetail(APIView):
+    def get_object(self, pk): #pk = project id
+        try:
+            return Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            raise Http404
 
-#     def get(self, request, pk):
-#         project = self.get_object(pk)
-#         serializer = ProjectDetailSerializer(project) #turning into json
-#         return Response(serializer.data)
+    def get(self, request, pk):
+        event = self.get_object(pk)
+        serializer = EventDetailSerializer(event) #turning into json
+        return Response(serializer.data)
 
 class AttendanceList(APIView): #can use project id as pk as argument for
     def get(self, request):
