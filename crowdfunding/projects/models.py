@@ -20,7 +20,7 @@ class Event(models.Model):
     )
     attendees=models.ForeignKey( #supporter in class example
         get_user_model(),
-        on_delete=models.Cascade,
+        on_delete=models.CASCADE,
         related_name='attendances'
     )
 
