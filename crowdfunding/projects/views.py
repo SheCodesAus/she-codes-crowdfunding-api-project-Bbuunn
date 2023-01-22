@@ -28,7 +28,7 @@ class EventCreate(APIView):
         )
 
 
-class EventtDetail(APIView):
+class EventDetail(APIView):
     def get_object(self, pk): #pk = project id
         try:
             return Event.objects.get(pk=pk)
