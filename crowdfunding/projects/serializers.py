@@ -1,16 +1,13 @@
 from rest_framework import serializers
-from .models import Event#, Pledge
+from .models import Event, Attendance
 
-# class PledgeSerializer(serializers.Serializer):
-#     id = serializers.ReadOnlyField()
-#     amount = serializers.IntegerField()
-#     comment = serializers.CharField(max_length=200)
-#     anonymous = serializers.BooleanField()
-#     supporter = serializers.CharField(max_length=200)
-#     project_id = serializers.IntegerField()
+class AttendanceSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    user = serializers.CharField(max_length=200) #q: will this need updating?
+    event_id = serializers.IntegerField()
 
-#     def create(self, validated_data):
-#         return Pledge.objects.create(**validated_data)
+    def create(self, validated_data): #Do you "create" attendance?
+        return Attendance.objects.create(**validated_data)
 
 
 class EventSerializer(serializers.Serializer): #we need to give it fields in models
