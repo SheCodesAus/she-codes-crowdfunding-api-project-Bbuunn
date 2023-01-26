@@ -41,8 +41,9 @@ CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
 # Application definition
 
 INSTALLED_APPS = [ #every new apps should be added here
-    'projects.apps.ProjectsConfig', #added
-    'rest_framework', #added
+    'rest_framework',
+    'rest_framework.authtoken',
+    'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'corsheaders',
     'django.contrib.admin',
@@ -52,6 +53,11 @@ INSTALLED_APPS = [ #every new apps should be added here
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        ]
+}
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
