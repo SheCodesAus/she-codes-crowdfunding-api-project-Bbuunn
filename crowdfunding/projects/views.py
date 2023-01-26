@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status, permissions
+from django.http import Http404
 from .models import Event, Attendance
 from .serializers import EventSerializer, AttendanceSerializer, EventDetailSerializer
-from django.http import Http404
-from rest_framework import status, permissions
-
+from .permissions import IsOwnerOrReadOnly
 class EventList(APIView): #handling get requests
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get(self, request):
@@ -31,11 +31,15 @@ class EventCreate(APIView):
 
 
 class EventDetail(APIView):
-    #q: do I need below?
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+        ]
     def get_object(self, pk): #pk = project id
         try:
-            return Event.objects.get(pk=pk)
+            event = Event.objects.get(pk=pk)
+            self.check_object_permissions(self.request, event)
+            return event
         except Event.DoesNotExist:
             raise Http404
 
@@ -54,8 +58,9 @@ class EventDetail(APIView):
         )
         if serializer.is_valid():
             serializer.save()
+        return Response(serializer.data)
 
-
+4
 class AttendanceList(APIView): #can use project id as pk as argument for
     def get(self, request):
         attendances = Attendance.objects.all() #list of attendances
