@@ -1,24 +1,35 @@
-from rest_framework import serializers
+from rest_framework import serializers, generics
 from .models import Event, Attendance
 
 class AttendanceSerializer(serializers.Serializer):
-    id = serializers.ReadOnlyField()
-    user = serializers.CharField(max_length=200) #q: will this need updating?
-    event_id = serializers.IntegerField()
+    class Meta:
+        model = Attendance
+        fields = ['id', 'event', 'user']
+        read_only_fields = ['id', 'user']
+    # id = serializers.ReadOnlyField()
+    # user = serializers.CharField(max_length=200) #q: will this need updating?
+    # event_id = serializers.IntegerField()
 
     def create(self, validated_data): #Do you "create" attendance?
         return Attendance.objects.create(**validated_data)
+
+class AttendanceList(generics.ListCreateAPIView):
+     queryset = Attendance.objects.all()
+     serializer_class = AttendanceSerializer
+    #q: in updated users notes they said add to views but looks like serializer
+    #  def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
 
 class EventSerializer(serializers.Serializer): #we need to give it fields in models
     id = serializers.ReadOnlyField()
     title = serializers.CharField(max_length=200)
     description = serializers.CharField(max_length=None)
-    location = serializers.CharField(max_length=200)
+    image = serializers.URLField()
+    is_open = serializers.BooleanField(required=False) #do I add (default=True)
     created_at = serializers.DateTimeField(read_only=True)
     online = serializers.BooleanField()
-    is_open = serializers.BooleanField(required=False) #do I add (default=True)
-    image = serializers.URLField()
+    location = serializers.CharField(max_length=200)
     min_attendees=serializers.IntegerField()
     max_attendees=serializers.IntegerField()
     owner = serializers.ReadOnlyField(source='owner.id')
@@ -32,10 +43,13 @@ class EventDetailSerializer(EventSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description',instance.description)
-        instance.goal = validated_data.get('goal', instance.goal)
         instance.image = validated_data.get('image', instance.image)
         instance.is_open = validated_data.get('is_open',instance.is_open)
-        instance.date_created = validated_data.get('date_created',instance.date_created)
+        instance.created_at = validated_data.get('created_at',instance.created_at)
         instance.owner = validated_data.get('owner', instance.owner)
+        instance.online = validated_data.get('online', instance.online)
+        instance.location = validated_data.get('location', instance.location)
+        instance.min_attendees = validated_data.get('min_attendees', instance.min_attendees)
+        instance.max_attendees = validated_data.get('max_attendees', instance.max_attendees)
         instance.save()
         return instance
