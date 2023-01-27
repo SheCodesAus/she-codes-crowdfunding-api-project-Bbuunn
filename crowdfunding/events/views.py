@@ -5,16 +5,14 @@ from django.http import Http404
 from .models import Event, Attendance
 from .serializers import EventSerializer, AttendanceSerializer, EventDetailSerializer
 from .permissions import IsOwnerOrReadOnly
-class EventList(APIView): #handling get requests
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class EventList(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly] #q: is read only needed
     def get(self, request):
         events = Event.objects.all()
         #python into json
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
-class EventCreate(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly] #q: is read only needed
     def post(self, request): #create into model instance
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
@@ -59,8 +57,13 @@ class EventDetail(APIView):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        event = self.get_object(pk)
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-4
+
 class AttendanceList(APIView): #can use event id as pk as argument for
     def get(self, request):
         attendances = Attendance.objects.all()
@@ -71,7 +74,7 @@ class AttendanceCreate(APIView):
     def post(self, request):
         serializer = AttendanceSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=self.request.user) #owner=request.user #q: supporter=self.request.user?
+            serializer.save(user=request.user) #owner=request.user #q: supporter=self.request.user?
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
