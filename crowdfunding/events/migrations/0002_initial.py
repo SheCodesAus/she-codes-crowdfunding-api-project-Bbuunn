@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('projects', '0001_initial'),
+        ('events', '0001_initial'),
     ]
 
     operations = [
@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='attendance',
             name='event',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='attendances', to='projects.event'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='attendances', to='events.event'),
         ),
     ]

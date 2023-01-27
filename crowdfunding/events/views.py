@@ -35,7 +35,7 @@ class EventDetail(APIView):
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
         ]
-    def get_object(self, pk): #pk = project id
+    def get_object(self, pk): #pk = event id
         try:
             event = Event.objects.get(pk=pk)
             self.check_object_permissions(self.request, event)
@@ -61,9 +61,9 @@ class EventDetail(APIView):
         return Response(serializer.data)
 
 4
-class AttendanceList(APIView): #can use project id as pk as argument for
+class AttendanceList(APIView): #can use event id as pk as argument for
     def get(self, request):
-        attendances = Attendance.objects.all() #list of attendances
+        attendances = Attendance.objects.all()
         serializer = AttendanceSerializer(attendances, many=True)
         return Response(serializer.data)
 
@@ -71,7 +71,7 @@ class AttendanceCreate(APIView):
     def post(self, request):
         serializer = AttendanceSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save() #owner=request.user
+            serializer.save(user=self.request.user) #owner=request.user #q: supporter=self.request.user?
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED

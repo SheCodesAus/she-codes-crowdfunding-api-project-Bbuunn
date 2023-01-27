@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
 INSTALLED_APPS = [ #every new apps should be added here
     'rest_framework',
     'rest_framework.authtoken',
-    'projects.apps.ProjectsConfig',
+    'events.apps.EventsConfig',
     'users.apps.UsersConfig',
     'corsheaders',
     'django.contrib.admin',

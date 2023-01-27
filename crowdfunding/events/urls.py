@@ -7,7 +7,7 @@ urlpatterns = [
     path('events/create/', views.EventCreate.as_view()),
     path('events/<int:pk>/', views.EventDetail.as_view()),
     path('attendances/', views.AttendanceList.as_view()),
-    path('attendances/create', views.AttendanceCreate.as_view()),
+    path('attendances/create/', views.AttendanceCreate.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -5,12 +5,12 @@ class AttendanceSerializer(serializers.Serializer):
     class Meta:
         model = Attendance
         fields = ['id', 'event', 'user']
-        read_only_fields = ['id', 'user']
+        read_only_fields = ['id']
     # id = serializers.ReadOnlyField()
     # user = serializers.CharField(max_length=200) #q: will this need updating?
     # event_id = serializers.IntegerField()
 
-    def create(self, validated_data): #Do you "create" attendance?
+    def create(self, validated_data):
         return Attendance.objects.create(**validated_data)
 
 class AttendanceList(generics.ListCreateAPIView):
@@ -38,7 +38,7 @@ class EventSerializer(serializers.Serializer): #we need to give it fields in mod
         return Event.objects.create(**validated_data)
 
 class EventDetailSerializer(EventSerializer):
-    #another type of project serializer
+    #another type of event serializer
     attendances = AttendanceSerializer(many=True, read_only=True)
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
