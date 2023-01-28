@@ -42,3 +42,8 @@ class CustomUserDetail(APIView):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
+
+    def delete(self, request, pk):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
