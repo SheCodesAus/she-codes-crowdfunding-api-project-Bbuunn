@@ -2,6 +2,10 @@
 ​
 {{ ‘2gather’ is a crowdfunding platform that promotes community building and skill sharing. People can create an event with minimum and maximum attendances, and “pledge” by attending the event. The main focus of ‘2gather’ is economically inclusive while ultimately encouraging the bond between users. Target audience is quite broad ad anyone with time and or skills can participate - although, travellers or people who have recently moved could particularly benefit from '2gather'. }}
 ​
+
+This README was created by editing a template provided by Ben! https://github.com/bendog
+Thanks Ben & Oliver for guiding us into the adventure of Django Rest Frame. No bunnies were harmed during the experiment.
+
 ## Features
 ​
 ### User Accounts
@@ -168,8 +172,3 @@ curl --request POST \
 	"max_attendees": 15
 }'
 
-
-
-
-This README was created by editing a template provided by Ben! https://github.com/bendog
-Thanks Ben & Oliver for guiding us into the adventure of Django Rest Frame. No bunnies were harmed during the experiment.
