@@ -27,7 +27,7 @@ class Event(models.Model):
     min_attendees=models.IntegerField()
     max_attendees=models.IntegerField()
     owner=models.ForeignKey( #previously owner_id
-        User, #previously User,
+        User,
         on_delete=models.CASCADE,
         related_name='events' #user.events = all the events owned by user
     )

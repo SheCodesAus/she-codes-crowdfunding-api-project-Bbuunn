@@ -6,12 +6,12 @@ from .models import CustomUser
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
 
 class CustomUserList(APIView):
+
     def get(self, request):
         users = CustomUser.objects.all()
         serializer=CustomUserSerializer(users, many=True)
         return Response(serializer.data)
 
-    #q: do I need to seperate below to suit my API endpoints?
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
