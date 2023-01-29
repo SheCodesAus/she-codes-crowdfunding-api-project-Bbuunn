@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from .models import CustomUser
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
+# from .permissions import IsSuperuserOrOwner
 class CustomUserList(APIView):
     
     permission_classes = [permissions.IsAdminUser]
@@ -25,6 +26,10 @@ class CustomUserCreate(APIView):
         return Response(serializer.errors)
 
 class CustomUserDetail(APIView):
+
+    # permission_classes = [IsSuperuserOrOwner]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
