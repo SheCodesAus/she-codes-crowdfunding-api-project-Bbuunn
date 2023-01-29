@@ -85,7 +85,7 @@ class AttendanceList(APIView): #can use event id as pk as argument for
         event = self.get_object(pk)
         if request.user in event.attendees.all():
             event.attendees.remove(request.user)
-            return Response("You are now attending the event.")
+            return Response("You are now attending the event.",status=status.HTTP_200_OK)
         else:
             event.attendees.add(request.user)
         return Response("You are no longer attending the event.",status=status.HTTP_200_OK)
