@@ -7,7 +7,7 @@ from .serializers import EventSerializer, EventDetailSerializer
 from .permissions import IsOwnerOrReadOnly
 class EventList(APIView):
    
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly] #q: is read only needed
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
    
     def get(self, request):
         events = Event.objects.all()
@@ -80,22 +80,7 @@ class AttendanceList(APIView): #can use event id as pk as argument for
         except Event.DoesNotExist:
             raise Http404
 
-    # def get(self, request, pk):
-    #     event = self.get_object(pk)
-    #     # attendances = Attendance.objects.all()
-    #     attendances = event.attendances.all()
-    #     print(attendances)
-    #     serializer = AttendanceSerializer(attendances, many=True)
-    #     return Response(serializer.data)
-
-    # def get(self, request, pk):
-    #     event = self.get_object(pk)
-    #     #python into json
-    #     serializer = AttendanceSerializer(event.attendees.all(), many=True)
-    #     print(event.attendees.all()[0].id)
-    #     return Response(serializer.data)
-
-
+   
     def post(self, request, pk):
         event = self.get_object(pk)
         if request.user in event.attendees.all():
@@ -104,13 +89,4 @@ class AttendanceList(APIView): #can use event id as pk as argument for
         else:
             event.attendees.add(request.user)
         return Response("You are no longer attending the event.",status=status.HTTP_200_OK)
-        # serializer = AttendanceSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     serializer.save(event=self.get_object(pk), attendee=request.user) #owner=request.user #q: supporter=self.request.user?
-        #     return Response(
-        #         status=status.HTTP_201_CREATED
-        #     )
-        # return Response(
-        #     serializer.errors,
-        #     status=status.HTTP_400_BAD_REQUEST
-        # )
+       
