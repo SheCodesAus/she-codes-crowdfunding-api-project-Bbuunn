@@ -167,3 +167,9 @@ curl --request POST \
 	"min_attendees": 1,
 	"max_attendees": 15
 }'
+
+
+
+
+This README was created by editing a template provided by Ben! https://github.com/bendog
+Thanks Ben & Oliver for guiding us into the adventure of Django Rest Frame. No bunnies were harmed during the experiment.
