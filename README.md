@@ -98,9 +98,9 @@
 ​
 ## Additional features
 ​
-- [ ] {Title Feature 1}
+- [ ] {Title Feature}
 ​
-{{ description of feature 1 }}
+{{ No additional feature added }}
 ​
 ​
 ### External libraries used
