@@ -20,12 +20,12 @@ COPY . /code/
 # COPY crowdfunding/ /code/ #Original
 
 RUN python manage.py collectstatic --noinput
-RUN chmod +x /code/run.sh
+# RUN chmod +x /code/run.sh
 
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
-
 # CMD ["/code/run.sh"] #Original
-CMD "/code/run.sh"
-# CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "demo.wsgi"]
+# CMD "/code/run.sh"
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "demo.wsgi"]
