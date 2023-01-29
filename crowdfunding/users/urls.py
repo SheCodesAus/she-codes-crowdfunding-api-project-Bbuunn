@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.CustomUserList.as_view(), name='customuser-list'),
+    path('create/', views.CustomUserCreate.as_view(), name='customuser-create'),
     path('<int:pk>/', views.CustomUserDetail.as_view(), name='customuser-detail'),
 ]
 

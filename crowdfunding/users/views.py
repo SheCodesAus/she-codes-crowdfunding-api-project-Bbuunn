@@ -1,16 +1,21 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from .models import CustomUser
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
-
 class CustomUserList(APIView):
+    
+    permission_classes = [permissions.IsAdminUser]
 
     def get(self, request):
         users = CustomUser.objects.all()
         serializer=CustomUserSerializer(users, many=True)
         return Response(serializer.data)
+
+class CustomUserCreate(APIView):
+
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
