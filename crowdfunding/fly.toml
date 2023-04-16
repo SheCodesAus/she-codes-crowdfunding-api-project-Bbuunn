@@ -1,6 +1,6 @@
 # fly.toml file generated for throbbing-silence-5067 on 2023-01-24T19:33:44+11:00
 
-app = "crowdfunding"
+app = "throbbing-silence-5067"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
